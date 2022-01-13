@@ -39,3 +39,13 @@
 1. create a route "/:animal/
 1. Inside the route add a condition where the message sent in the response corresponds to the animal typed: For instance, if the animal type is cat, it show "MEOW", if it is dog, it shows "WOOF", if it is a pig, it shows "OINK", etc. Include an else statemnet the show the message "The animal is not in our zoo"
 1. Create a route and pass as a paramenter an animal name, followed by a number, which represent the number of times the animal emits its sound. 
+
+## Step Four
+
+### Assign to student
+1. you have a zoo with three animals: cat, dogs, and pigs
+1. Modifiy the code so when the user select an animal, the corrsponding message is its sound, when the animal does not exist the 
+
+## Step Five
+
+### Evrythng in one file: tag version 1.0.1
