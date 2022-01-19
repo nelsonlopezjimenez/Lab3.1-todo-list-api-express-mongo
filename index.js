@@ -59,6 +59,16 @@ app.post('/api/todos', function( req, res) {
     });
 });
 
+app.put('/api/todos/:id', function (req, res){
+    todoModel.findOneAndUpdate( {id: req.params.id}, req.body, {new:true})
+    .then (function(todos){
+        res.json(todos);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
+
 app.delete('/api/todos/:id', function (req, res){
     todoModel.deleteOne( { _id: req.params.id }, )
     .then (function() {
