@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
+const recipeRoutes = require('./routes/recipes');
 
 // Built-In Middleware
 
@@ -23,6 +24,8 @@ const todoSchema = new mongoose.Schema({
 const todoModel = mongoose.model("Todo", todoSchema);
 
 // Custom Middleware
+
+app.use('/api/recipes', recipeRoutes);
 
 // Routes
 

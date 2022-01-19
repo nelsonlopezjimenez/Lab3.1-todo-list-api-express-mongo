@@ -1,9 +1,9 @@
-const db = require('../models');
+const db = require('../models/recipe');
 
 exports.getRecipes = function(req, res) {
     db.Recipe.find()
-    .then(function(recipes){
-        res.json(recipes);
+    .then(function(Recipes){
+        res.json(Recipes);
     })
     .catch(function(err){
         res.send(err);
@@ -41,7 +41,7 @@ exports.updateRecipe = function(req, res){
 };
 
 exports.deleteRecipe = function (req, res) {
-    db.Recipe.remove ( { _id: req.params.recipeId } );
+    db.Recipe.remove ( { _id: req.params.recipeId } )
     .then(function(){
         res.json( {message: "We deleted it!" } );
     })
