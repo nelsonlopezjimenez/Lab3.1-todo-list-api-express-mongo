@@ -85,34 +85,11 @@ app.get('/', function (req, res) {
     res.send('Hello World')
 })
 
-app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
-})
+const port = process.env.PORT || 4444;
 
-app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
-    }
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
 })
-app.get('/:animal/:numberOfTimes', function (req, res) {
-    let buildString = "";
-    let animal  = req.params.animal;
-    let numberOfTimes = req.params.numberOfTimes
-    if (animal == "dog") {
-        for (i = 0; i < numberOfTimes ; i++) {
-            buildString += "MEOW "
-        }
-        res.send(buildString);
-    } else {
-        res.send(`The ${animal} is not in our zoo`)
-    }
-})
-
-app.listen(4444)
 
 // Database Seeding
 
@@ -126,4 +103,4 @@ const createTodos = async () => {
     await todo1.save();
     await todo2.save();
 };
-//createTodos();
+//createTodos(); // uncomment only once. Otherwise you will end up with many of the same
