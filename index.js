@@ -117,24 +117,13 @@ app.listen(4444)
 // Database Seeding
 
 const createTodos = async () => {
-    const todo1 = new mongoose.models.Todo({
-        title: 'Feed the cat with the fish',
+    const todo1 = new todoModel ({
+        title: "Feed the cat with the fish"
     });
-    const todo2 = new model.Todo({
+    const todo2 = new todoModel( {
         title: 'Walk the fish',
     });
     await todo1.save();
     await todo2.save();
 };
 //createTodos();
-
-const createRecipe = async () => {
-    const recipe1 = new mongoose.models.Recipe({
-        title: "Fish",
-        instructions: "instructions",
-        ingredients: ["first", "second", "third"],
-        img: "pasta.img"
-    })
-    await recipe1.save();
-}
-//createRecipe();
