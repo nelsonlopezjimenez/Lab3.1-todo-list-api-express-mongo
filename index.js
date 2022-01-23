@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 
 // Database Server MongoDb Setup
 
-mongoose.connect('mongodb://localhost/colt-wieruch-todo-list',
+mongoose.connect('mongodb://localhost/lopeznelson',
     { useNewUrlParser: true });
 
 

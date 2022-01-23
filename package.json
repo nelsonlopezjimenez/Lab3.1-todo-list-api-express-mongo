@@ -1,5 +1,5 @@
 {
-  "name": "a-colt-wieruch-todo-list-express",
+  "name": "todo-list-api-with-mongo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
