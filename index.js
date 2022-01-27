@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 
 // Database Server MongoDb Setup
 
-mongoose.connect('mongodb://localhost/lopeznelson',
+mongoose.connect('mongodb://localhost/sarahpettigrew',
     { useNewUrlParser: true });
 
 
