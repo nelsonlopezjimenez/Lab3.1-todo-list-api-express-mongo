@@ -13,3 +13,36 @@
 ### Assign to student Lab 3.1
 
 1. Refactor the code in index.js file so the routes, the models, and other code is located in different folders. Use the "recipes-api" app as a reference, and/or run "npx express-generator" following the instructions in expressjs.com/en/starter/generator.html
+
+
+## File structures
+
+### recipe-w-message app:
+~~~
+  package.json
+  .babelrc
+  .env
+  .gitignore
+  src
+    |_ index.js
+    |_ models
+    |        |_ index.js
+    |        |_ recipe.js
+    |        |_ users.js message.js
+    |_ routes
+    |        |_ index.js
+    |        |_ recipe.js 
+    |        |_ users.js messages.jd session.js
+    |_ node_modules
+    |_ README.md
+
+
+todo-list app
+
+package.json
+index.js
+node_modules
+README.md
+.gitignore
+.env
+~~~
