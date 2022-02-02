@@ -35,6 +35,8 @@ app.get('/', function (req, res) {
 //Todos Routes
 app.use('/api/todos', routes.todos);
 
+app.use('/api/fizzbuzz', routes.fizzbuzz);
+
 
 
 const port = process.env.PORT || 4444;
