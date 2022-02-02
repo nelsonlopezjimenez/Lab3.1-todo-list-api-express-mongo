@@ -1,6 +1,6 @@
-import root from './root.js';
-import todo from './todo.js';
-import fizzbuzz from './fizzbuzz.js';
+import root from './root';
+import todo from './todo';
+import fizzbuzz from './fizzbuzz';
 
 export default {
     root,

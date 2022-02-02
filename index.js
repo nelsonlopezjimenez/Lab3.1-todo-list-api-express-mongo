@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
-import models, { connectDb } from './src/models/index.js';
-import routes from './src/routes/index.js';
+import models, { connectDb } from './src/models';
+import routes from './src/routes';
 
 const app = express();
-dotenv.config();
 
 // * MIDDLEWARES * //
 // Built-In Middleware
