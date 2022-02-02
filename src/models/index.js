@@ -10,4 +10,3 @@ const models = { Todo };
 export { connectDb };
 
 export default models;
-

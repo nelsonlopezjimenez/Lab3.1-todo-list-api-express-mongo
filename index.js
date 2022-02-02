@@ -19,7 +19,6 @@ app.use('/', routes.root);
 app.use('/api/todos', routes.todo);
 app.use('/api/fizzbuzz', routes.fizzbuzz);
 
-
 // * START * //
 // SERVER PORT LISTENING
 // Connect asynchronously and start listening
