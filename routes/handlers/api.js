@@ -20,7 +20,7 @@ const api = {
       .catch(err => res.send(err));
   },
 
-  updateTodo: (req, res) => {
+  updateTodoById: (req, res) => {
     todoModel.findOneAndUpdate( {id: req.params.id}, req.body, {new:true})
       .then (todos => res.json(todos))
       .catch(err => res.send(err));

@@ -1,4 +1,5 @@
 import api from "./routes/handlers/api.js";
+import { fizzBuzz } from "./routes/handlers/fizzbuzz.js";
 
 import express from "express";
 const app = express();
@@ -16,9 +17,12 @@ app.set('view engine', 'ejs');
 app.get('/api/todos', api.getAllTodos);
 app.get('/api/todos/:id', api.getTodoById);
 app.post('/api/todos', api.createTodo);
-app.put('/api/todos/:id', api.updateTodo);
+app.put('/api/todos/:id', api.updateTodoById);
 app.delete('/api/todos/:id', api.deleteTodoById);
 app.get('/', api.helloWorldRoute);
+
+// FizzBuzz Route
+app.get('/api/fizzbuzz', fizzBuzz);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
