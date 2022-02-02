@@ -22,7 +22,7 @@ app.use('/api/fizzbuzz', routes.fizzbuzz);
 // * START * //
 // SERVER PORT LISTENING
 // Connect asynchronously and start listening
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
 
 connectDb().then(async () => {
     if (eraseDatabaseOnSync){
