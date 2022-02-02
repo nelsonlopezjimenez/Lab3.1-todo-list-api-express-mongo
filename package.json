@@ -1,5 +1,6 @@
 {
   "name": "todo-list-api-with-mongo",
+  "type" : "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
