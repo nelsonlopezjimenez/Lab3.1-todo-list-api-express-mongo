@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const todoSchema = new mongoose.Schema({
   title: String,
@@ -6,6 +7,6 @@ const todoSchema = new mongoose.Schema({
   date: { type: Date, default: new Date() }
 });
 
-const Todo = mongoose.model('todo', todoSchema);
+const Todo = mongoose.model('todos', todoSchema);
 
-module.exports = Todo;
+export default Todo;

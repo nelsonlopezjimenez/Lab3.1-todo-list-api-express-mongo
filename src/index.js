@@ -37,13 +37,13 @@ app.listen(port, () => {
 // Database Seeding
 
 const createTodos = async () => {
-    const todo1 = new todoModel ({
+    const todo1 = new models.Todo ({
         title: "Feed the cat with the fish"
     });
-    const todo2 = new todoModel( {
+    const todo2 = new models.Todo ({
         title: 'Walk the fish',
     });
     await todo1.save();
     await todo2.save();
 };
-//createTodos(); // uncomment only once. Otherwise you will end up with many of the same
+// createTodos(); // uncomment only once. Otherwise you will end up with many of the same
