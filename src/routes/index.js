@@ -4,5 +4,5 @@ import fizz from './fizz';
 
 export default {
     todo,
-    fizz
+    fizz,
 };

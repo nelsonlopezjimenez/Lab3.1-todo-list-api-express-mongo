@@ -7,6 +7,6 @@ const todoSchema = new mongoose.Schema({
   date: { type: Date, default: new Date() }
 });
 
-const Todo = mongoose.model('todos', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 export default Todo;
