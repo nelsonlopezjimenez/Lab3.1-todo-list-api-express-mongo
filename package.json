@@ -1,9 +1,10 @@
 {
   "name": "todo-list-api-with-mongo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "### Combination of Colt Steele and Robert Wieruch online tutorials",
+  "main": "src/index.js",
   "scripts": {
+    "start": "nodemon --exec ./node_modules/.bin/babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,5 +22,13 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.8",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsjpb/Lab3.1-todo-list-api-express-mongo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itsjpb/Lab3.1-todo-list-api-express-mongo/issues"
+  },
+  "homepage": "https://github.com/itsjpb/Lab3.1-todo-list-api-express-mongo#readme"
 }
