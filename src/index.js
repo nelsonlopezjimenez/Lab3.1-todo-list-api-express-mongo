@@ -1,3 +1,4 @@
+import 'dotenv/config';
 // const express = require('express')
 import express from 'express';  // CAN'T GET THIS TO WORK
 
@@ -16,23 +17,38 @@ app.set('view engine', 'ejs');
 
 // Custom Middleware
 
-// Routes
 
-app.use('/api/todo', routes.todo);
+// ROUTES
+app.use('/api/todos', routes.todo);
 app.use('/fizz', routes.fizz);
 
 
 
-
+// Localhost homepage
 app.get('/', function (req, res) {
     res.send('Hello!!')
 })
 
-const port = process.env.PORT || 4444;
+// const port = process.env.PORT || 4444;
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-})
+const eraseDatabaseOnSync = false;
+
+connectDb().then(async () => {
+    if (eraseDatabaseOnSync){
+        await Promise.all([
+            models.Todo.deleteMany({}),
+        ]);
+    }
+
+    app.listen(process.env.PORT, () =>
+        console.log(`Example app listening on port ${process.env.PORT}!`),
+    );
+});
+
+
+// app.listen(port, () => {
+//     console.log(`Server running on port ${port}`)
+// })
 
 // Database Seeding
 
