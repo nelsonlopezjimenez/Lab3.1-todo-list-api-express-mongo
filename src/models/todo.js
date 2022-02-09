@@ -12,6 +12,6 @@ const todoSchema = new mongoose.Schema({
     }
 }, { toObject: { virtuals: true } });
 
-const Todo = mongoose.model('Recipe', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 export default Todo;
