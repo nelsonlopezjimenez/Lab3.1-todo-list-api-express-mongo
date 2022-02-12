@@ -1,7 +1,7 @@
 import {Router} from 'express'; 
 
 const router = Router(); 
-
+//finished fizzbuzz
 router.get('/', async (req, res) =>{
      var number;
      for(var i = 1; i <= 100; i++){
