@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Form Post</title>
+</head>
+<body>
+    <form action="https://jsonplaceholder.typicode.com/todos" method="get">
+        <input type="text" name="title" id="title" value="ipsa repellendus fugit nisi" placeholder="Search by title">
+        <input type="submit" value="GET Search Title default: ipsa repellendus fugit nisi"  >
+    </form>
+    <form action="https://jsonplaceholder.typicode.com/todos" method="get">
+        <input type="text" name="userId" id="userId" value="1" placeholder="Search by userId">
+        <input type="submit" value="GET Search userId default: 1"  >
+    </form>
+
+    <form>
+        <input type="text" name="userId" id="userId" value="1" placeholder="Enter userId">
+        <input type="submit" value="GET All Todos by userId default: 1"  >
+    </form>
+
+    <form action="https://jsonplaceholder.typicode.com/todos" method="post">
+        <input type="text" name="title" id="title" value="Take the quiz" placeholder="Create a todo">
+        <input type="submit" value="POST default: take the quiz"  >
+    </form>
+    <form action='https://jsonplaceholder.typicode.com/todos/' method="get">
+        <input type="text" name="id" id="id" value="22" placeholder="Add the ID">
+        <input type="submit" value="GET one todo by ID default: 22"  >
+    </form>
+    <div id="root">
+
+    </div>
+    <script>
+        document.forms[2].onsubmit = async (e) => {
+            e.preventDefault();
+            let myRoot = document.querySelector("#root");
+            const params = new URLSearchParams([...new FormData(e.target).entries()]);
+            const response = await new Response(params).text();
+            let myUrl = "https://jsonplaceholder.typicode.com/todos" + "?" + response;
+            fetch(myUrl , { method:"GET"})
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                let my = "<ol>";
+                json.forEach(i => my += `<li>${i.title}</li>`);
+                my += "</ol>"
+                myRoot.innerHTML = my;
+            });
+            console.log(response);
+        }
+    </script>
+</body>
+</html>

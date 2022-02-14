@@ -19,11 +19,11 @@
 
 ### recipe-w-message app:
 ~~~
-  package.json
-  .babelrc
-  .env
-  .gitignore
-  src
+  |_ package.json
+  |_ .babelrc
+  |_ .env
+  |_ .gitignore
+  |_ src
     |_ index.js
     |_ models
     |        |_ index.js
@@ -38,11 +38,10 @@
 
 
 todo-list app
-
-package.json
-index.js
-node_modules
-README.md
-.gitignore
-.env
+     |_ package.json
+     |_ index.js
+     |_ node_modules
+     |_ README.md
+     |_ .gitignore
+     |_ .env
 ~~~

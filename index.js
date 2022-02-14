@@ -38,8 +38,6 @@ app.get('/api/todos', function (req, res){
     })
 })
 
-
-
 app.get('/api/todos/:id', function (req, res){
     todoModel.findById( req.params.id)
     .then (function(todos){

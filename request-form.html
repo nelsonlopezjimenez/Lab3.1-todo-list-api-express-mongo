@@ -1,24 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Form Post</title>
 </head>
-<body>
-    <form action="http://localhost:4444/api/todos" method="get">
-        <input type="text" name="title" id="title" value="Click to GET">
-        <input type="submit" value="GET"  >
-    </form>
 
-    <form action="http://localhost:4444/api/todos" method="post">
+<body>
+    <form action="http://localhost:3434/api/todos" method="get">
+        <input type="text" name="" id="" value="">
+        <input type="submit" value="Search for all todos">
+    </form>
+    <form action="http://localhost:3434/api/todos/620a6bf1f908903d108013e6" method="get">
+        <input type="query" name="" id="" value="">
+        <input type="submit" value="Search for one todo 620a6bf1f908903d108013e6">
+    </form>
+    <!-- ObjectId("6209f553b6943857589491d2"),620a66bf225fee1a70bb8a1a, 620a6bf1f908903d108013e6  -->
+    <form action="http://localhost:3434/api/todos" method="GET">
+        <input type="text" name="" id="id" value="" placeholder="">
+        <input type="submit" value="pretty print of titles">
+    </form>
+    <form action="http://localhost:3434/api/todos" method="post">
         <input type="text" name="title" id="title" value="" placeholder="Add a todo">
-        <input type="submit" value="POST"  >
+        <input type="submit" value="Create new Todo">
     </form>
-    <form action='http://localhost:4444/api/todos/:ObjectId' method="get">
-        <input type="text" name="id" id="id" value="" placeholder="Add the ID">
-        <input type="submit" value="get one"  >
+    <form action='http://localhost:3434/api/todos/620a6bf1f908903d108013e6' method="get">
+        <input type="text" name="_id" id="id" value="somevalue" placeholder="Add the ID">
+        <input type="submit" value="get one when /620a6bf1f908903d108013e6">
     </form>
+    <form action='http://localhost:3434/api/todos' method="get">
+        <input type="text" name="_id" id="id" value="" placeholder="Add the ID">
+        <input type="submit" value="get one when /">
+    </form>
+    <div id="root">
+
+    </div>
+    <script>
+        document.forms[4].onsubmit = async (event) => {
+            e.preventDefault();
+            const params = new URLSearchParams([...new FormData(e.target).entries()]);
+            const response = await new Response(params).text();
+            let myUrl = 'http://localhost:3434/api/todos' + response;
+            // fetch(myUrl, { method: "GET" })
+            //     .then((response) => response.json())
+            //     .then((json) => console.log(json));
+            console.log(myUrl);
+        }
+        document.forms[2].onsubmit = async (e) => {
+            e.preventDefault();
+            let myRoot = document.querySelector("#root");
+            const params = new URLSearchParams([...new FormData(e.target).entries()]);
+            const response = await new Response(params).text();
+            let myUrl ='http://localhost:3434/api/todos' + "?" + response;
+            fetch(myUrl, { method: "GET" })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json);
+                    let my = "<ol>";
+                    json.forEach(i => my += `<li>${i.title}</li>`);
+                    my += "</ol>"
+                    myRoot.innerHTML = my;
+                });
+            console.log(response);
+        }
+    </script>
 </body>
+
 </html>
