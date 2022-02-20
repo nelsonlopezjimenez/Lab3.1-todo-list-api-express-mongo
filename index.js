@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 
 // Database Server MongoDb Setup
 
-mongoose.connect('mongodb://localhost/lopeznelson',
+mongoose.connect('mongodb://localhost/typicode2',
     { useNewUrlParser: true });
 
 
@@ -24,9 +24,85 @@ const todoSchema = new mongoose.Schema({
 
 const todoModel = mongoose.model("Todo", todoSchema);
 
+const customerSchema = new mongoose.Schema({
+    id: {type: String, },
+    name: {type: String, },
+    username: {type: String, },
+    email: {type: String, },
+    address: {
+        street: {type: String, },
+        suite: {type: String, },
+        city: {type: String, },
+        zipcode: {type: String, },
+        geo: {
+            lat: {type: String, },
+            lng: {type: String, },
+        },
+    },
+    phone: {type: String, },
+    website: {type: String, },
+    company: {
+        name: {type: String, },
+        catchPhrase: {type: String, },
+        bs: {type: String, },
+    },
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
 // Custom Middleware
 
 // Routes
+
+app.get('/api/customers', function (req, res){
+    Customer.find()
+    .then (function(customers){
+        res.json(customers);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+})
+
+app.get('/api/customers/:id', function (req, res){
+    Customer.findById( req.params.id)
+    .then (function(customers){
+        res.json(customers);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+})
+app.post('/api/customers', function( req, res) {
+    Customer.create({
+        title : req.body.title,
+    })
+    .then(function(newTodo){
+        res.status(201).json(newTodo);
+    })
+    .catch(function(err) {
+        res.send(err);
+    });
+});
+
+app.put('/api/customers/:id', function (req, res){
+    Customer.findOneAndUpdate( {id: req.params.id}, req.body, {new:true})
+    .then (function(customers){
+        res.json(customers);
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
+
+app.delete('/api/customers/:id', function (req, res){
+    Customer.deleteOne( { _id: req.params.id }, )
+    .then (function() {
+        res.json( { 'We deleted it!!': "we deleted it"});
+    })
+    .catch(function(err){
+        res.send(err);
+    });
+});
 
 app.get('/api/todos', function (req, res){
     todoModel.find()
