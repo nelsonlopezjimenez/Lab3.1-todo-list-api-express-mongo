@@ -14,7 +14,7 @@ router.get('/', function (req, res){
 })
 
 router.get('/:id', function (req, res){
-    models.Todo.findById( req.params.id)
+    models.Todo.findById(req.params.id)
     .then (function(todos){
         return res.json(todos);
     })
@@ -26,6 +26,7 @@ router.get('/:id', function (req, res){
 router.post('/', function( req, res) {
     models.Todo.create({
         title : req.body.title,
+        isChecked : req.body.isChecked
     })
     .then(function(newTodo){
         return res.status(201).json(newTodo);
@@ -54,5 +55,17 @@ router.delete('/:id', function (req, res){
         return res.send(err);
     });
 });
+
+router.get('/title/:title', function (req, res){
+    models.Todo.findOne({
+        title: req.params.title
+    })
+    .then (function(todos){
+        return res.json(todos);
+    })
+    .catch(function(err){
+        return res.send(err);
+    })
+})
 
 export default router;

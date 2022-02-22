@@ -3,10 +3,13 @@ import express from 'express';
 import models, { connectDb } from './models';
 import routes from './routes';
 
+
+var cors = require('cors');
 const app = express();
 
 // * MIDDLEWARES * //
 // Built-In Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('/public'));
