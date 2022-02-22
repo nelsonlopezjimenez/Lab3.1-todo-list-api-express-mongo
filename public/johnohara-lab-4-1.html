@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 4.1</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet"> 
+
+  <script src="https://kit.fontawesome.com/1fab886966.js" crossorigin="anonymous"></script>
+
+  <style>
+    /*
+      Colors:
+
+        Viridian    - 0FA3B1
+        Honeydew    - D9E5D6
+        Champagne   - EDDEA4
+        Salmon      - F7A072
+        Saffron     - FF9B42
+
+
+      
+        // mint set
+        Mountain Meadow - 09BC8A
+        Warm Black      - 004346
+    */
+
+    html { 
+      background: #282c34;
+      color: #abb2bf;
+      font-family: "Nunito", sans-serif;
+    }
+
+    #logo {
+      align-items: center;
+      background-color: #09BC8A;
+      border-radius: 4rem;
+      color: #004346;
+      display: flex;
+      font-size: 2.8rem;
+      /* border-left: 2rem solid #09BC8A; */
+      padding: 0 1.4rem;
+      /* color: #282c34; */
+      /* text-shadow: 0px 4px 0px #004346; */
+      /* border-bottom: 8px solid #FF9B42; */
+      transform: none;
+      transition: transform 200ms;
+      user-select: none;
+    }
+
+    #logo:hover {
+      cursor: pointer;
+      transform: scale(1.02);
+    }
+
+    #logo i {
+      margin-right: 1rem;
+    }
+
+    header {
+      align-items: center;
+      /* background: #282c34; */
+      background: #2c313c;
+      /* background: #004346; */
+      /* border-bottom: 12px solid #09BC8A; */
+      /* border-bottom: 12px solid #004346; */
+      display: flex;
+      height: 5rem;
+      justify-content: center;
+      left: 0px;
+      padding: 1rem;
+      position: fixed;
+      top: 0px;
+      width: 100%;
+      z-index: 100;
+    }
+
+    header > * {
+      margin-right: 3rem;
+    }
+
+    #main-form > * {
+      margin-right: 1rem;
+    }
+
+    #main-form div {
+      width: 100%;
+    }
+
+    #main-form {
+      display: flex;
+      margin-right: 0;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .add-todo, .filter-select {
+      /* border-top-left-radius: 0;
+      border-bottom-left-radius: 0; */
+    }
+
+    .add-todo {
+      height: 2.8rem;
+      width: 2.8rem;
+      transform: translate(-3.75rem, -.1rem);
+    }
+
+    #filter-input, #add-input {
+      background-color: #282c34;
+      /* color: #09BC8A; */
+      max-width: 30rem;
+      min-width: 10rem;
+      width: 60%;
+    }
+
+    #filter-input {
+      /* padding-left: .75rem; */
+      min-width: 4rem;
+      padding-right: 10rem;
+    }
+
+    #add-input {
+      padding-right: 5rem;
+      /* width: 30%; */
+    }
+
+    .filter-select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      margin-right: -15rem;
+      /* position: relative; */
+      transform: translate(-5.9rem, -.1rem);
+      width: 5rem;
+    }
+
+    input, select, button, .todo-item {
+      /* border-radius: .5rem; */
+      border-radius: 2rem;
+    }
+
+    input, select, button {
+      /* border-radius: .5rem; */
+      border: 2px solid transparent;
+      /* box-shadow: 0px 3px 0px #004346; */
+      /* border-bottom: 4px solid #ff9b42; */
+      color: #abb2bf;
+      font-size: 1.2rem;
+      outline: none;
+      padding: .8rem 1.2rem;
+      transition: border 200ms;
+    }
+
+    input {
+      background: #2c313c;
+      padding: 1rem 1.5rem;
+      /* border-top: 2px solid transparent;
+      border-left: 2px solid transparent;
+      border-right: 2px solid transparent; */
+    }
+
+    button, select {
+      background: #09BC8A;
+      border-radius: 2rem;
+      font-size: .6rem;
+      font-weight: bold;
+      padding: .5rem .8rem;
+      color: #282c34;
+    }
+
+    button:hover, select:hover {
+      /* border-radius: 2rem; */
+      /* border: 4px solid #282c34; */
+      /* box-shadow: inset 0px 0px 15px #282c3499; */
+    }
+
+    select:hover, button:hover {
+      cursor: pointer;
+    }
+
+    input:hover, input + select:hover, input + button:hover, input:focus {
+      border: 2px solid #09BC8A;
+      /* border: 2px solid #EDDEA4; */
+    }
+
+    .todo-wrapper {
+      padding-top: 8rem;
+      width: 100%;
+    }
+
+    .todo-container {
+      margin: 0 auto;
+      min-width: 640px;
+      max-width: 1080px;
+      width: 66%;
+    }
+
+    .todo-controls-wrapper{
+      display: flex;
+      justify-content: center;
+      margin-left: auto;
+    }
+
+    .todo-controls-wrapper button {
+      /* height: 2.6rem; */
+      /* margin-left: .5rem; */
+      /* width: 2.6rem; */
+    }
+
+    .todo-item .todo-controls-wrapper .todo-delete-button {
+      opacity: 0%;
+    }
+
+    .todo-item:hover .todo-controls-wrapper .todo-delete-button {
+      opacity: 100%;
+    }
+
+
+    .todo-delete-button {
+      background: transparent;
+      color: #09BC8A;
+      font-size: 2rem;
+      transform: none;
+      transition: background 200ms, opacity 200ms, transform 200ms;
+    }
+
+    .important .todo-delete-button {
+      color: #F02454;
+    }
+
+    .warning .todo-delete-button {
+      color: #fbbc04;
+    }
+
+    .alternate .todo-delete-button {
+      color: #11a4fb;
+    }
+
+    .todo-delete-button:hover {
+      /* background: #F02454; */
+      transform: scale(1.1);
+    }
+
+    .todo-item {
+      /* align-items: flex-start; */
+      align-items: center;
+      background: #2c313c;
+      border: 2px solid transparent;
+      box-shadow: none;
+      display: flex;
+      filter: none;
+      font-size: 1.6rem;
+      /* justify-content: space-between; */
+      margin-bottom: 1rem;
+      opacity: 100%;
+      padding: 1.5rem;
+      transform: none;
+      transition: opacity 200ms, border 200ms, box-shadow 200ms, transform 200ms, filter 200ms;
+      user-select: none;
+    }
+
+    .todo-item-check {
+      color: #09BC8A;
+      font-size: 2rem;
+      filter: blur(4px);
+      opacity: 0%;
+      position: absolute;
+      transform: none;
+      transition: transform 200ms, opacity 200ms, filter 200ms;
+      z-index: -1;
+    }
+
+    .important .todo-item-check {
+      color: #F02454;
+    }
+
+    .warning .todo-item-check {
+      color: #fbbc04;
+    }
+
+    .alternate .todo-item-check {
+      color: #11a4fb;
+    }
+
+    .todo-item.checked .todo-item-check {
+      filter: none;
+      opacity: 100%;
+      transform: translateX(-5rem);
+    }
+
+    .todo-item.fade-in {
+      filter: blur(2px);
+      opacity: 30%;
+      transform: translateY(4rem) scale(.95);
+    }
+
+    .todo-item:hover {
+      cursor: pointer;
+      border: 2px solid #09BC8A;
+    }
+
+    .todo-item.important:hover {
+      border: 2px solid #F02454;
+    }
+
+    .todo-item.warning:hover {
+      border: 2px solid #fbbc04;
+    }
+
+    .todo-item.alternate:hover {
+      border: 2px solid #11a4fb;
+    }
+
+    .todo-item.checked:hover {
+      border: 2px solid #abb2bf32;
+    }
+
+    .todo-item-marker {
+      align-self: center;
+      background-color: #09BC8A;
+      border-radius: 2rem;
+      flex: 0 0 2rem;
+      height: 2rem;
+      width: 2rem;
+      transition: background-color 200ms, opacity 200ms;
+    }
+
+    .todo-item.important .todo-item-marker {
+      background-color: #F02454;
+    }
+
+    .todo-item.warning .todo-item-marker {
+      background-color: #fbbc04;
+    }
+
+    .todo-item.alternate .todo-item-marker {
+      background-color: #11a4fb;
+    }
+
+    .todo-item p {
+      /* border-left: 12px solid; */
+      /* color: #09BC8A; */
+      margin: 0;
+      opacity: 100%;
+      padding-left: 1em;
+      transition: opacity 200ms, color 200ms;
+    }
+
+    /* .todo-item.important:not(.checked) p {
+      color: #F02454;
+    }
+
+    .todo-item.warning:not(.checked) p {
+      color: #fbbc04;
+    }
+
+    .todo-item.alternate:not(.checked) p {
+      color: #11a4fb;
+    } */
+
+    .todo-item.checked {
+      font-style: italic;
+      text-decoration-color: #09BC8A;
+      text-decoration: line-through;
+      /* opacity: 20%; */
+    }
+
+    .todo-item.checked .todo-item-marker {
+      background-color: #abb2bf;
+      opacity: 20%;
+    }
+
+    .todo-item.checked p {
+      color: #abb2bf;
+      opacity: 20%;
+    }
+
+    .no-results {
+      font-size: 2.5rem;
+      margin: 1rem auto;
+      text-align: center;
+      width: 50%;
+    }
+
+    /* .todo-controls {
+      width: 10rem;
+    } */
+
+    #loading-animation {
+      color: #09BC8A;
+      display: flex;
+      justify-content: center;
+      font-size: 15rem;
+      text-align: center;
+    }
+
+    #loading-animation .animation-wrapper {
+      animation: fade-animation 1s infinite linear;
+      /* display: block; */
+    }
+
+    @keyframes fade-animation {
+      0% {
+        opacity: 100%;
+        /* transform: rotate(0deg); */
+      }
+      50% {
+        opacity: 20%;
+        /* transform: rotate(180deg); */
+      }
+      100% {
+        opacity: 100%;
+        /* transform: rotate(360deg); */
+      }
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="content-wrapper">
+    <header>
+      <h1 id="logo">
+        <i class="fas fa-check"></i>
+        todo:
+      </h1>
+      <form id="main-form">
+        <div class="add-wrapper">
+          <input type="text" name="main-input" id="add-input" placeholder="add a todo">
+          <button class="add-todo" id="add-button">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="filter-wrapper">
+          <input type="text" name="filter-input" id="filter-input" placeholder="filter todos">
+          <select name="filter-select" id="filter-select" class="filter-select">
+            <option>title</option>
+            <option>id</option>
+          </select>
+        </div>
+      </form>
+    </header>
+
+    <div class="todo-wrapper" id="todo-wrapper">
+      <div id="loading-animation">
+        <span class="animation-wrapper">
+          <i class="fas fa-list-ul"></i>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const addInput      = document.getElementById("add-input");
+    const addButton     = document.getElementById("add-button");
+    // should this be filtered in the frontend?
+    const filterInput   = document.getElementById("filter-input");
+    // not really doing much with this yet
+    const filterSelect  = document.getElementById("filter-select");
+    const theForm       = document.getElementById("main-form");
+    const theLogo       = document.getElementById("logo");
+    const todoWrapper   = document.getElementById("todo-wrapper");
+    
+    const baseUrl = "http://localhost:4444";
+    
+    const routes = {
+      addTodo: `${baseUrl}/api/todos`,
+      allTodos: `${baseUrl}/api/todos`,
+      deleteById: `${baseUrl}/api/todos/id`,
+      updateById: `${baseUrl}/api/todos/id`,
+    }
+    
+    let allTodos = [];
+
+    const getTodoDOMElements = () => 
+      Array.from(document.getElementsByClassName("todo-item"));
+
+    const getTodoDeleteButtons = () => 
+      Array.from(document.getElementsByClassName("todo-delete-button"));
+
+    const renderAllTodos = () => {
+      todoWrapper.innerHTML = "";
+
+      let filteredTodos = allTodos.filter(todo => 
+        todo.title.toLowerCase().match(filterInput.value.toLowerCase()) !== null);
+
+      filteredTodos.forEach(todo => {
+        todoWrapper.innerHTML += 
+        `<div class="todo-container">
+          <div class="todo-item ${todo.isChecked ? "checked" : ""}" id="${todo._id}">
+            <div class="todo-item-check">
+              <i class="fas fa-check"></i>
+            </div>
+
+            <div class="todo-item-marker"></div>
+
+            <p class="todo-item-content">
+              ${todo.title}
+            </p>
+
+            <div class="todo-controls-wrapper">
+              <button class="todo-delete-button" id="delete-${todo._id}">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>`;
+      });
+
+      if (filteredTodos.length === 0) {
+        todoWrapper.innerHTML += 
+          "<div class='no-results'>Sorry, no todos match that search criteria.</div>";
+      }
+
+      bindClickListeners();
+      bindDeleteListeners();
+    }
+
+    const getAllTodos = async () => {
+      allTodos.length = 0;
+
+      fetch(routes.allTodos)
+        .then(response => response.json())
+        .then(data => {
+          // data.forEach(todoItem => allTodos.push(todoItem));
+          // allTodos = filterInput.value === "" ? data : 
+          //   data.filter(todo => todo.title.toLowerCase().match(filterInput.value.toLowerCase()) !== null);
+          allTodos = data;
+          renderAllTodos();
+        })
+        .catch(error => console.error("Error: ", error));
+    }
+
+    // handle form submissions
+    theForm.addEventListener("submit", e => {
+      e.preventDefault();
+    });
+
+    theLogo.addEventListener("click", e => {
+      e.preventDefault();
+      addInput.focus();
+    });
+
+    // binds the click listeners for checking a div
+    const bindClickListeners = () =>
+      getTodoDOMElements().forEach(todo => {
+        todo.addEventListener("click", e => {
+          e.preventDefault();
+
+          console.log(e.target);
+
+          if (!e.target.classList.contains("todo-delete-button")) {
+            fetch(`${routes.updateById}/${todo.id}`, { 
+              method: "PUT",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                _id: todo.id,
+                isChecked: !todo.classList.contains("checked"),
+              }) 
+            }).then(response => {
+              console.log("Success! ", response);
+            }).catch(error => console.error("Error: ", error));
+            todo.classList.toggle("checked");
+          }
+      })});
+
+    const bindDeleteListeners = () =>
+      getTodoDeleteButtons().forEach(button => {
+        button.addEventListener("click", e => {
+          e.preventDefault();
+          e.stopPropagation();
+          const todoId = button.id.split("-")[1]
+
+          fetch(`${routes.deleteById}/${todoId}`, { method: "DELETE" })
+            .then((res) => {
+              console.log("Success! ", res);
+              allTodos = allTodos.filter(todo => todo._id !== todoId);
+              renderAllTodos();
+            })
+            .catch(error => console.error("Error: ", error));
+      });
+    });
+
+    addButton.addEventListener("click", e => {
+      if (addInput.value.length !== 0) {
+        fetch(routes.addTodo, { 
+          headers: { "Content-Type": "application/json", },
+          method: "POST", 
+          body: JSON.stringify({
+            isChecked: false,
+            title: addInput.value, 
+          })})
+          .then(response => {
+            console.log("Success! ", response);
+            getAllTodos();
+          }).catch(error => console.error("Error: ", error));
+      }
+    });
+
+    // listen for filter changes
+    filterInput.addEventListener("keypress", () => renderAllTodos());
+
+    addInput.addEventListener("blur", () => addInput.value = "");
+
+
+    // remove the .fade-in class from the todos to animate
+    getTodoDOMElements().forEach(todo => {
+      todo.classList.remove("fade-in");
+    });
+
+
+    // populate initial list
+    getAllTodos();
+  </script>
+</body>
+</html>

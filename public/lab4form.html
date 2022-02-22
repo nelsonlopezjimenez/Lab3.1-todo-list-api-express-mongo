@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab 4 - John O'Hara</title>
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/1fab886966.js" crossorigin="anonymous"></script>
+
+    <style>
+      * {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background: #21252b;
+        color: #eee;
+      }
+
+      #content-wrapper {
+        display: flex;
+        margin: 0 auto;
+        width: 90%;
+      }
+
+      #form-container {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        width: 30%;
+      }
+
+      .input-wrapper {
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem;
+      }
+
+      .input-wrapper input {
+        width: 80%;
+      }
+
+      .input-wrapper button {
+        width: 10%;
+      }
+
+      .input-wrapper #button-get-all {
+        width: 100%;
+      }
+
+      button, input { 
+        border-radius: .5rem;
+        border: 2px solid transparent;
+        color: #eee;
+        font-size: 1.2rem;
+        padding: 1rem;
+        transition: border 200ms;
+      }
+
+      button {
+        background: #c96c60;
+        font-weight: bold;
+      }
+
+      button:hover {
+        cursor: pointer;
+      }
+
+      input { 
+        background: #282c34;
+      }
+
+      input:focus {
+        border: 2px solid #c96c60;
+        outline: none;
+      }
+
+      #output-container {
+        align-self: center;
+        /* border-radius: 1rem; */
+        background: #282c34;
+        overflow-y: scroll;
+        padding: 2rem 1.5rem;
+        height: 95vh;
+        width: 60%;
+      }
+
+      #output-container p {
+        color: #aaa;
+        margin: .25rem 0;
+        padding-left: .5rem;
+      }
+
+      span.todo-key {
+        color: #c96c60;
+        padding-left: 2rem;
+      }
+
+      span.todo-value {
+        color: #98c379;
+      }
+
+      p.message-success, p.message-error {
+        background-color: #2c313c;
+        border-radius: .25rem;
+        font-weight: bold;
+        margin-left: -.5rem;
+        padding: .5rem;
+      }
+
+      #output-container p.message-success {
+        color: #98c379;
+      }
+
+      #output-container p.message-error {
+        color: #c96c60;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="content-wrapper">
+      <div id="form-container">
+        <div class="input-wrapper">
+          <button id="button-get-all">Get All Todos</button>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" name="" id="input-get-one" placeholder="Get first match by title">
+          <button id="button-get-one" tabindex="-1"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" name="" id="input-get-all-matches" placeholder="Get all matches by title">
+          <button id="button-get-all-matches" tabindex="-1"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" name="" id="input-create" placeholder="Create new todo">
+          <button id="button-create" tabindex="-1"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" name="" id="input-delete" placeholder="Delete first match by title">
+          <button id="button-delete" tabindex="-1"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+
+      <div id="output-container">
+
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const baseUrl = "http://localhost:4444";
+    
+    // array is 0 - route, 1 - method0
+    const routes = {
+      create: [`${baseUrl}/api/todos`, "POST"],
+      delete: [`${baseUrl}/api/todos/id`, "DELETE"],
+      getAll: [`${baseUrl}/api/todos`, "GET"],
+      getAllMatches: [`${baseUrl}/api/todos/title`, "GET"],
+      getOne: [`${baseUrl}/api/todos/title`, "GET"],
+    };
+
+    const inputs = {
+      create: document.getElementById("input-create"),
+      delete: document.getElementById("input-delete"),
+      getOne: document.getElementById("input-get-one"),
+      getAllMatches: document.getElementById("input-get-all-matches"),
+    };
+
+    const inputNames = Object.keys(inputs);
+
+    const buttons = {
+      create: document.getElementById("button-create"),
+      delete: document.getElementById("button-delete"),
+      getAll: document.getElementById("button-get-all"),
+      getAllMatches: document.getElementById("button-get-all-matches"),
+      getOne: document.getElementById("button-get-one"),
+    };
+
+    const buttonNames = Object.keys(buttons);
+
+    const output = document.getElementById("output-container");
+
+    const scrollOutput = () => output.scrollTop = output.scrollHeight;
+
+    const log = message => {
+      output.innerHTML += `<p>${message}</p>`;
+      scrollOutput();
+    };
+
+    const logSuccess = message => {
+      output.innerHTML += `<p class="message-success">${message}</p>`;
+      scrollOutput();
+    }
+
+    const logError = message => {
+      output.innerHTML += `<p class="message-error">${message}</p>`;
+      scrollOutput();
+    }
+    
+    const logAllTodos = todoArray => {
+      Array.isArray(todoArray) && todoArray.forEach(todo => logTodo(todo));
+      logSuccess(`${todoArray.length} todos returned.`);
+    };
+
+    const logTodo = todoJson => {
+      if (typeof todoJson === "object") {
+        let keys = Object.keys(todoJson);
+        
+        log("{");
+
+        keys.forEach(key => log(`<span class="todo-key">"${key}"</span>: 
+          <span class="todo-value">
+            ${typeof todoJson[key] === "string" ? `"${todoJson[key]}"` : todoJson[key]}</span>,`));
+
+        log("}");
+      }
+    };
+
+    // create button listener
+    buttons.create.addEventListener("click", (e) => {
+      const newTodo = inputs.create.value;
+      inputs.create.value = "";
+
+      fetch(routes.create[0], { 
+        headers: {"Content-Type": "application/json", },
+        method: routes.create[1],
+        body: JSON.stringify({
+          isChecked: false,
+          title: newTodo,
+        })})
+        .then(response => logSuccess(`Created todo: "${newTodo}"`))
+        .catch(error => logError(error));
+    });
+
+    // delete button listener
+    buttons.delete.addEventListener("click", (e) => {
+      fetch(`${routes.getOne[0]}/${inputs.delete.value}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data[0] !== null && data[0] !== undefined) {
+            fetch(`${routes.delete[0]}/${data[0]._id}`, { method: routes.delete[1] })
+              .then(response => logSuccess(`Deleted first match for "${inputs.delete.value}"`))
+              .catch(error => logError(error));
+          }
+
+          data === null || data === undefined && logError(`No match for "${inputs.delete.value}"`);
+        })
+        .catch(error => logError(error));
+
+    });
+
+    // getAll button listener
+    buttons.getAll.addEventListener("click", (e) => {
+      fetch(routes.getAll[0])
+        .then(response => response.json())
+        .then(data => logAllTodos(data))
+        .catch(error => logError(error));
+    });
+
+    // getOne button listener
+    buttons.getOne.addEventListener("click", (e) => {
+      fetch(`${routes.getOne[0]}/${inputs.getOne.value}`)
+        .then(response => response.json())
+        .then(data => {
+          data[0] !== null && logTodo(data[0]);
+          data.length > 0 && logSuccess(`Found match for "${inputs.getOne.value}"`);
+          data.length === 0 && logError(`No match for "${inputs.getOne.value}"`);
+        })
+        .catch(error => logError(error));
+    });
+
+    // getAllMatches button listener
+    buttons.getAllMatches.addEventListener("click", (e) => {
+      fetch(`${routes.getAllMatches[0]}/${inputs.getAllMatches.value}`)
+        .then(response => response.json())
+        .then(data => {
+          logAllTodos(data);
+        })
+        .catch(error => logError(error));
+    });
+
+    inputNames.forEach(inputName => {
+      inputs[inputName].addEventListener("keydown", e => {
+        e.key === "Enter" && buttons[inputName].click();
+      });
+    });
+
+  </script>
+</html>
