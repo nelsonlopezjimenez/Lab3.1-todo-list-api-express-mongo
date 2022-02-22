@@ -36,23 +36,52 @@ router.post('/', function( req, res) {
 });
 
 router.put('/:id', function (req, res){
-  models.Todo.findOneAndUpdate( {id: req.params.id}, req.body, {new:true})
+  models.Todo.findOneAndUpdate({id: req.params.id}, req.body, {new:true})
   .then (function(todos){
-      res.json(todos);
+    res.json(todos);
   })
   .catch(function(err){
-      res.send(err);
+    res.send(err);
   })
 });
 
 router.delete('/:id', function (req, res){
-  models.Todo.deleteOne( { _id: req.params.id }, )
+  models.Todo.deleteOne({
+    _id: req.params.id
+  })
   .then (function() {
-      res.json( { 'We deleted it!!': "we deleted it"});
+    res.json( { 'We deleted it!!': "we deleted it"});
   })
   .catch(function(err){
-      res.send(err);
+    res.send(err);
   });
 });
+
+router.get('/title/:title', function(req, res) {
+  models.Todo.findOne ({ 
+      title: req.params.title 
+  })
+  .then (function(todos) {
+        res.json(todos);
+  })
+  .catch (function(err) {
+        res.send(err);
+  })
+})
+
+// This isn't working yet...
+router.get('/status/:status', function(req, res) {
+  models.Todo.find ({
+    status: req.params.status
+  })
+  .then (function(todos) {
+    res.json(todos);
+  })
+  .catch (function(err) {
+    res.send(err);
+  })
+})
+
+
 
 export default router;

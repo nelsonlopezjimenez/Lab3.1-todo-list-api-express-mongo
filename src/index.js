@@ -54,12 +54,20 @@ connectDb().then(async () => {
 
 const createTodos = async () => {
     const todo1 = new models.Todo ({
-        title: "Feed the cat with the fish"
+        title: "Get groceries"
     });
     const todo2 = new models.Todo ({
-        title: 'Walk the fish',
+        title: 'Walk the dog',
+    });
+    const todo3 = new models.Todo ({
+        title: 'Pet the cat',
+    });
+    const todo4 = new models.Todo ({
+        title: 'Do the dishes',
     });
     await todo1.save();
     await todo2.save();
+    await todo3.save();
+    await todo4.save();
 };
 // createTodos(); // uncomment only once. Otherwise you will end up with many of the same
