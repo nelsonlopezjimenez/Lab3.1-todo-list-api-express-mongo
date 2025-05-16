@@ -1,4 +1,4 @@
-## Express Server Todo list
+## Lab3.1-todo-list-api-express: Express Server Todo list
 
 ### Combination of Colt Steele and Robert Wieruch online tutorials
 
